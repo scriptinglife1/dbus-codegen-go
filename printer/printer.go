@@ -100,8 +100,8 @@ func LookupSignal(signal *dbus.Signal) (Signal, error) {
 {{- range $iface := .Interfaces}}
 {{- range $signal := $iface.Signals}}
 	case {{ifaceNameConst $iface}} + "." + "{{$signal.Name}}":
-		if len(signal.body) < len({{len($signal.Args)}}) {
-			return nil, fmt.Errorf("Signal has %i args rather than the expected {{len($singal.Args)}}", len(signal.body))
+		if len(signal.Body) < {{len $signal.Args}} {
+			return nil, fmt.Errorf("signal has %v args rather than the expected {{len $signal.Args}}", len(signal.Body))
 		}
 {{- range $i, $argument := $signal.Args}}
 		v{{$i}}, ok := signal.Body[{{$i}}].({{$argument.Type}})
